@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini Golf Scorecard</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 10px;
+  background: #f5f1e6; /* light tan */
+}
+
+.header {
+  text-align: center;
+}
+
+.header img {
+  display: block;
+  margin: 6px auto;
+}
+
+.neon-logo {
+  max-width: 200px;
+}
+
+.fairmont-logo {
+  max-width: 140px;
+  filter: brightness(0);
+  opacity: 0.85;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 10px;
+}
+
+th, td {
+  border: 1px solid #d3cbb8;
+  padding: 8px;
+  text-align: center;
+  font-size: 14px;
+}
+
+th {
+  background: #e4efea; /* soft green */
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  max-width: 50px;
+  text-align: center;
+  font-size: 16px;
+  border: none;
+  background: transparent;
+}
+
+.name-input {
+  width: 100%;
+  border-bottom: 1px solid #aaa;
+  font-weight: bold;
+  background: transparent;
+}
+
+.total-row {
+  font-weight: bold;
+  background: #f0ece2;
+}
+
+.under {
+  color: #2e7d32; /* green */
+}
+
+.over {
+  color: #c62828; /* red */
+}
+
+.even {
+  color: #333;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <img src="Neon9.jpg" class="neon-logo">
+  <img src="fmscp.png" class="fairmont-logo">
+</div>
+
+<div class="card">
+
+<table>
+
+<tr>
+  <th>Hole</th>
+  <th>Par</th>
+  <th><input class="name-input" placeholder="Player 1"></th>
+  <th><input class="name-input" placeholder="Player 2"></th>
+  <th><input class="name-input" placeholder="Player 3"></th>
+  <th><input class="name-input" placeholder="Player 4"></th>
+</tr>
+
+<script>
+const pars = [3,2,4,2,2,2,2,2,3];
+let totalPar = pars.reduce((a,b)=>a+b,0);
+
+for (let i = 0; i < 9; i++) {
+  document.write(`
+    <tr>
+      <td>${i+1}</td>
+      <td>${pars[i]}</td>
+      <td><input type="number" onchange="calcTotals()"></td>
+      <td><input type="number" onchange="calcTotals()"></td>
+      <td><input type="number" onchange="calcTotals()"></td>
+      <td><input type="number" onchange="calcTotals()"></td>
+    </tr>
+  `);
+}
+</script>
+
+<tr class="total-row">
+  <td colspan="2">Total</td>
+  <td id="t1">0</td>
+  <td id="t2">0</td>
+  <td id="t3">0</td>
+  <td id="t4">0</td>
+</tr>
+
+</table>
+
+</div>
+
+<script>
+function calcTotals() {
+  let rows = document.querySelectorAll("table tr");
+  let totals = [0,0,0,0];
+
+  rows.forEach((row, rIndex) => {
+    if (rIndex > 0 && rIndex <= 9) {
+      let inputs = row.querySelectorAll("input[type='number']");
+      inputs.forEach((input, i) => {
+        totals[i] += Number(input.value);
+      });
+    }
+  });
+
+  for (let i = 0; i < 4; i++) {
+    let el = document.getElementById("t" + (i+1));
+    el.innerText = totals[i];
+
+    let diff = totals[i] - totalPar;
+
+    el.classList.remove("under","over","even");
+
+    if (diff < 0) el.classList.add("under");
+    else if (diff > 0) el.classList.add("over");
+    else el.classList.add("even");
+  }
+}
+</script>
+
+</body>
+</html>
