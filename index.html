@@ -9,89 +9,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 10px;
-  background: #f5f1e6;
-}
-
-.header {
-  text-align: center;
-}
-
-.header img {
-  display: block;
-  margin: 6px auto;
-}
-
-.neon-logo {
-  max-width: 200px;
-}
-
-.fairmont-logo {
-  max-width: 140px;
-  filter: brightness(0);
-  opacity: 0.85;
-}
-
-.card {
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-  margin-top: 10px;
-}
-
-th, td {
-  border: 1px solid #d3cbb8;
-  padding: 8px;
-  text-align: center;
-  font-size: 14px;
-}
-
-th {
-  background: #e4efea;
-  font-weight: 600;
-}
-
-input {
-  width: 100%;
-  max-width: 50px;
-  text-align: center;
-  font-size: 16px;
-  border: none;
-  background: transparent;
-}
-
-.name-input {
-  width: 100%;
-  border-bottom: 1px solid #aaa;
-  font-weight: bold;
-}
-
-.total-row {
-  font-weight: bold;
-  background: #f0ece2;
-}
-
-.under { color: #2e7d32; }
-.over { color: #c62828; }
-.even { color: #333; }
-
-/* 🔥 Highlight winning column */
-.leader {
-  background: #ff2bd6 !important; /* neon pink */
-  color: #fff !important;
-  border-radius: 6px;
-}
-<style>
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 10px;
-  background: #000; /* black background */
+  background: #000;
   color: #fff;
 }
 
@@ -110,15 +28,15 @@ body {
 
 .fairmont-logo {
   max-width: 140px;
-  filter: brightness(0) invert(1); /* make visible on black */
+  filter: brightness(0) invert(1);
   opacity: 0.9;
 }
 
 .card {
-  background: #111; /* dark card */
+  background: #111;
   border-radius: 12px;
   padding: 10px;
-  box-shadow: 0 0 12px rgba(57,255,20,0.25); /* neon glow */
+  box-shadow: 0 0 12px rgba(57,255,20,0.25);
 }
 
 table {
@@ -128,7 +46,7 @@ table {
 }
 
 th, td {
-  border: 1px solid #39ff14; /* neon green lines */
+  border: 1px solid #39ff14;
   padding: 8px;
   text-align: center;
   font-size: 14px;
@@ -163,17 +81,38 @@ input {
 }
 
 /* Score colors */
-.under { color: #39ff14; } /* neon green */
-.over { color: #ff3b3b; }  /* bright red */
+.under { color: #39ff14; }
+.over { color: #ff3b3b; }
 .even { color: #fff; }
 
-/* Leader highlight (neon pink stays) */
+/* Leader highlight (totals only) */
 .leader {
   background: #ff2bd6 !important;
   color: #fff !important;
   border-radius: 6px;
 }
 </style>
+</head>
+
+<body>
+
+<div class="header">
+  <img src="Neon9.jpg" class="neon-logo">
+  <img src="fmscp.png" class="fairmont-logo">
+</div>
+
+<div class="card">
+
+<table id="scoreTable">
+
+<tr>
+  <th>Hole</th>
+  <th>Par</th>
+  <th><input class="name-input" placeholder="Player 1"></th>
+  <th><input class="name-input" placeholder="Player 2"></th>
+  <th><input class="name-input" placeholder="Player 3"></th>
+  <th><input class="name-input" placeholder="Player 4"></th>
+</tr>
 
 <script>
 const pars = [3,2,4,2,2,2,2,2,3];
@@ -209,7 +148,7 @@ function calcTotals() {
   let rows = document.querySelectorAll("#scoreTable tr");
   let totals = [0,0,0,0];
 
-  // Clear previous highlights
+  // Clear previous leader highlights
   for (let i = 1; i <= 4; i++) {
     document.getElementById("t" + i).classList.remove("leader");
   }
@@ -228,7 +167,7 @@ function calcTotals() {
     }
   });
 
-  // Update totals + color
+  // Update totals display + colors
   for (let i = 0; i < 4; i++) {
     let el = document.getElementById("t" + (i+1));
     let score = totals[i];
@@ -242,7 +181,7 @@ function calcTotals() {
     else el.classList.add("even");
   }
 
-  // 🔥 Find leader (lowest score)
+  // Find leader (lowest score)
   let minScore = Math.min(...totals);
 
   totals.forEach((score, i) => {
@@ -252,3 +191,6 @@ function calcTotals() {
   });
 }
 </script>
+
+</body>
+</html>
