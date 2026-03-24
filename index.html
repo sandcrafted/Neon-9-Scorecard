@@ -86,28 +86,94 @@ input {
   color: #fff !important;
   border-radius: 6px;
 }
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 10px;
+  background: #000; /* black background */
+  color: #fff;
+}
+
+.header {
+  text-align: center;
+}
+
+.header img {
+  display: block;
+  margin: 6px auto;
+}
+
+.neon-logo {
+  max-width: 200px;
+}
+
+.fairmont-logo {
+  max-width: 140px;
+  filter: brightness(0) invert(1); /* make visible on black */
+  opacity: 0.9;
+}
+
+.card {
+  background: #111; /* dark card */
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 0 12px rgba(57,255,20,0.25); /* neon glow */
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 10px;
+}
+
+th, td {
+  border: 1px solid #39ff14; /* neon green lines */
+  padding: 8px;
+  text-align: center;
+  font-size: 14px;
+}
+
+th {
+  background: #0f2f0f;
+  color: #39ff14;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  max-width: 50px;
+  text-align: center;
+  font-size: 16px;
+  border: none;
+  background: transparent;
+  color: #fff;
+}
+
+.name-input {
+  width: 100%;
+  border-bottom: 1px solid #39ff14;
+  font-weight: bold;
+  color: #fff;
+}
+
+.total-row {
+  font-weight: bold;
+  background: #0a0a0a;
+}
+
+/* Score colors */
+.under { color: #39ff14; } /* neon green */
+.over { color: #ff3b3b; }  /* bright red */
+.even { color: #fff; }
+
+/* Leader highlight (neon pink stays) */
+.leader {
+  background: #ff2bd6 !important;
+  color: #fff !important;
+  border-radius: 6px;
+}
 </style>
-</head>
-
-<body>
-
-<div class="header">
-  <img src="Neon9.jpg" class="neon-logo">
-  <img src="fmscp.png" class="fairmont-logo">
-</div>
-
-<div class="card">
-
-<table id="scoreTable">
-
-<tr>
-  <th>Hole</th>
-  <th>Par</th>
-  <th><input class="name-input" placeholder="Player 1"></th>
-  <th><input class="name-input" placeholder="Player 2"></th>
-  <th><input class="name-input" placeholder="Player 3"></th>
-  <th><input class="name-input" placeholder="Player 4"></th>
-</tr>
 
 <script>
 const pars = [3,2,4,2,2,2,2,2,3];
