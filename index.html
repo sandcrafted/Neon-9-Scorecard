@@ -9,7 +9,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 10px;
-  background: #f5f1e6; /* light tan */
+  background: #f5f1e6;
 }
 
 .header {
@@ -52,7 +52,7 @@ th, td {
 }
 
 th {
-  background: #e4efea; /* soft green */
+  background: #e4efea;
   font-weight: 600;
 }
 
@@ -69,7 +69,6 @@ input {
   width: 100%;
   border-bottom: 1px solid #aaa;
   font-weight: bold;
-  background: transparent;
 }
 
 .total-row {
@@ -77,16 +76,13 @@ input {
   background: #f0ece2;
 }
 
-.under {
-  color: #2e7d32; /* green */
-}
+.under { color: #2e7d32; }
+.over { color: #c62828; }
+.even { color: #333; }
 
-.over {
-  color: #c62828; /* red */
-}
-
-.even {
-  color: #333;
+/* 🔥 Highlight winning column */
+.leader {
+  background: #e8f5e9 !important;
 }
 </style>
 </head>
@@ -100,7 +96,7 @@ input {
 
 <div class="card">
 
-<table>
+<table id="scoreTable">
 
 <tr>
   <th>Hole</th>
@@ -113,17 +109,16 @@ input {
 
 <script>
 const pars = [3,2,4,2,2,2,2,2,3];
-let totalPar = pars.reduce((a,b)=>a+b,0);
 
 for (let i = 0; i < 9; i++) {
   document.write(`
     <tr>
       <td>${i+1}</td>
       <td>${pars[i]}</td>
-      <td><input type="number" onchange="calcTotals()"></td>
-      <td><input type="number" onchange="calcTotals()"></td>
-      <td><input type="number" onchange="calcTotals()"></td>
-      <td><input type="number" onchange="calcTotals()"></td>
+      <td><input type="number" min="1" inputmode="numeric" pattern="[0-9]*" onchange="calcTotals()"></td>
+      <td><input type="number" min="1" inputmode="numeric" pattern="[0-9]*" onchange="calcTotals()"></td>
+      <td><input type="number" min="1" inputmode="numeric" pattern="[0-9]*" onchange="calcTotals()"></td>
+      <td><input type="number" min="1" inputmode="numeric" pattern="[0-9]*" onchange="calcTotals()"></td>
     </tr>
   `);
 }
@@ -131,10 +126,10 @@ for (let i = 0; i < 9; i++) {
 
 <tr class="total-row">
   <td colspan="2">Total</td>
-  <td id="t1">0</td>
-  <td id="t2">0</td>
-  <td id="t3">0</td>
-  <td id="t4">0</td>
+  <td id="t1">E</td>
+  <td id="t2">E</td>
+  <td id="t3">E</td>
+  <td id="t4">E</td>
 </tr>
 
 </table>
@@ -143,29 +138,59 @@ for (let i = 0; i < 9; i++) {
 
 <script>
 function calcTotals() {
-  let rows = document.querySelectorAll("table tr");
+  let rows = document.querySelectorAll("#scoreTable tr");
   let totals = [0,0,0,0];
+
+  // Clear previous highlights
+  document.querySelectorAll(".leader").forEach(el => el.classList.remove("leader"));
 
   rows.forEach((row, rIndex) => {
     if (rIndex > 0 && rIndex <= 9) {
       let inputs = row.querySelectorAll("input[type='number']");
       inputs.forEach((input, i) => {
-        totals[i] += Number(input.value);
+        let val = Number(input.value);
+        let par = pars[rIndex - 1];
+
+        if (!isNaN(val) && val > 0) {
+          totals[i] += (val - par);
+        }
       });
     }
   });
 
+  // Update totals display
   for (let i = 0; i < 4; i++) {
     let el = document.getElementById("t" + (i+1));
-    el.innerText = totals[i];
+    let score = totals[i];
 
-    let diff = totals[i] - totalPar;
+    el.innerText = score === 0 ? "E" : (score > 0 ? "+" + score : score);
 
     el.classList.remove("under","over","even");
 
-    if (diff < 0) el.classList.add("under");
-    else if (diff > 0) el.classList.add("over");
+    if (score < 0) el.classList.add("under");
+    else if (score > 0) el.classList.add("over");
     else el.classList.add("even");
+  }
+
+  // 🔥 Find lowest score (leader)
+  let minScore = Math.min(...totals);
+
+  totals.forEach((score, i) => {
+    if (score === minScore) {
+      highlightColumn(i + 2); // offset for Hole + Par columns
+    }
+  });
+}
+
+// Highlight full column
+function highlightColumn(colIndex) {
+  let table = document.getElementById("scoreTable");
+
+  for (let r = 0; r < table.rows.length; r++) {
+    let cell = table.rows[r].cells[colIndex];
+    if (cell) {
+      cell.classList.add("leader");
+    }
   }
 }
 </script>
