@@ -16,13 +16,19 @@ body {
 }
 
 .header { text-align: center; }
-.header img { display: block; margin: 4px auto; }
 
-.neon-logo { max-width: 160px; }
 .fairmont-logo {
   max-width: 110px;
   filter: brightness(0) invert(1);
   opacity: 0.9;
+  margin: 6px auto;
+  display: block;
+}
+
+.neon-logo-bottom {
+  max-width: 160px;
+  margin: 14px auto;
+  display: block;
 }
 
 .card {
@@ -41,29 +47,16 @@ table {
 th, td {
   border: 1px solid #39ff14;
   padding: 5px 2px;
+  text-align: center;
   font-size: 12px;
 }
 
-/* 🔥 CENTER EVERYTHING PROPERLY */
-td, th {
-  text-align: center;
-  vertical-align: middle;
-}
-
-td {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Headers */
 th {
   background: #0f2f0f;
   color: #39ff14;
   font-family: 'Orbitron', sans-serif;
 }
 
-/* Left columns */
 .hole-col, .par-col {
   background: #0f2f0f;
 }
@@ -75,7 +68,6 @@ th {
   border-right: 3px solid #39ff14 !important;
 }
 
-/* Hole numbers */
 .hole {
   font-size: 16px;
   font-weight: bold;
@@ -92,17 +84,22 @@ input {
   border: none;
   background: transparent;
   color: #fff;
-  padding: 0;
+  display: block;
+  margin: 0 auto;
 }
 
-/* Name inputs (FIXED) */
+/* ✅ FIXED NAME ALIGNMENT */
 .name-input {
-  max-width: 65px;
+  width: 80%;
+  max-width: 60px;
   font-size: 13px;
   border-bottom: 1px solid #39ff14;
   font-weight: bold;
   text-align: center;
   font-family: 'Orbitron', sans-serif;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Player colors */
@@ -124,7 +121,6 @@ input {
 .over { color: #ff3b3b; }
 .even { color: #fff; }
 
-/* Leader glow */
 .leader {
   box-shadow: 0 0 10px #ff2bd6, 0 0 20px #ff2bd6;
   border-radius: 6px;
@@ -148,7 +144,6 @@ input {
 <body>
 
 <div class="header">
-  <img src="Neon9.jpg" class="neon-logo">
   <img src="fmscp.png" class="fairmont-logo">
 </div>
 
@@ -194,6 +189,9 @@ for (let i = 0; i < 9; i++) {
 </div>
 
 <button class="clear-btn" onclick="clearScores()">Clear Scores</button>
+
+<!-- ✅ Neon logo moved to bottom -->
+<img src="Neon9.jpg" class="neon-logo-bottom">
 
 <script>
 ["p1name","p2name","p3name","p4name"].forEach((id,i)=>{
