@@ -52,24 +52,24 @@ th, td {
   font-size: 12px;
 }
 
-/* Header + left columns unified */
+/* 🔤 Header font change */
 th {
   background: #0f2f0f;
   color: #39ff14;
   font-weight: 600;
+  font-family: "Courier New", monospace;
 }
 
-/* 🔥 Hole + Par columns */
+/* Hole + Par columns */
 .hole-col, .par-col {
   background: #0f2f0f;
   color: #39ff14;
 }
 
-/* Narrow widths */
-.hole-col { width: 34px; }
-.par-col { width: 34px; }
+.hole-col { width: 32px; }
+.par-col { width: 32px; }
 
-/* Thick divider before players */
+/* Thick divider */
 .divider {
   border-right: 3px solid #39ff14 !important;
 }
@@ -84,25 +84,31 @@ th {
     0 0 10px #ff2bd6;
 }
 
-/* Inputs */
+/* Inputs (FIXED alignment) */
 input {
-  width: 100%;
-  max-width: 38px;
+  width: 90%;
+  max-width: 36px;
   text-align: center;
   font-size: 15px;
   border: none;
   background: transparent;
   color: #fff;
-  margin: 0 auto;
   display: block;
+  margin: 0 auto;
+  padding: 0;
 }
 
-/* Name inputs (smaller) */
+/* Name inputs (extra fix) */
 .name-input {
+  width: 90%;
+  max-width: 55px;
+  font-size: 11px;
   border-bottom: 1px solid #39ff14;
   font-weight: bold;
-  font-size: 12px;
-  max-width: 60px;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  font-family: "Courier New", monospace;
 }
 
 /* Player colors */
@@ -114,6 +120,11 @@ input {
 .total-row {
   font-weight: bold;
   background: #0a0a0a;
+}
+
+/* 🔤 Total label font */
+.total-label {
+  font-family: "Courier New", monospace;
 }
 
 /* Score colors */
@@ -168,7 +179,7 @@ for (let i = 0; i < 9; i++) {
 </script>
 
 <tr class="total-row">
-  <td colspan="2" class="divider">Total</td>
+  <td colspan="2" class="divider total-label">Total</td>
   <td id="t1">E</td>
   <td id="t2">E</td>
   <td id="t3">E</td>
