@@ -8,7 +8,7 @@
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 8px;
+  padding: 6px;
   background: #000;
   color: #fff;
 }
@@ -19,15 +19,15 @@ body {
 
 .header img {
   display: block;
-  margin: 6px auto;
+  margin: 4px auto;
 }
 
 .neon-logo {
-  max-width: 180px;
+  max-width: 160px;
 }
 
 .fairmont-logo {
-  max-width: 120px;
+  max-width: 110px;
   filter: brightness(0) invert(1);
   opacity: 0.9;
 }
@@ -35,46 +35,61 @@ body {
 .card {
   background: #111;
   border-radius: 12px;
-  padding: 8px;
+  padding: 6px;
   box-shadow: 0 0 12px rgba(57,255,20,0.25);
 }
 
 table {
   border-collapse: collapse;
   width: 100%;
-  table-layout: fixed; /* 🔥 fixes mobile alignment */
+  table-layout: fixed;
 }
 
 th, td {
   border: 1px solid #39ff14;
-  padding: 6px 2px;
+  padding: 5px 2px;
   text-align: center;
-  font-size: 13px;
+  font-size: 12px;
 }
 
+/* Header + left columns unified */
 th {
   background: #0f2f0f;
   color: #39ff14;
   font-weight: 600;
 }
 
-/* 🔥 HOLE NUMBERS */
+/* 🔥 Hole + Par columns */
+.hole-col, .par-col {
+  background: #0f2f0f;
+  color: #39ff14;
+}
+
+/* Narrow widths */
+.hole-col { width: 34px; }
+.par-col { width: 34px; }
+
+/* Thick divider before players */
+.divider {
+  border-right: 3px solid #39ff14 !important;
+}
+
+/* Hole numbers */
 .hole {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   color: #ff2bd6;
   text-shadow:
     0 0 5px #ff2bd6,
-    0 0 10px #ff2bd6,
-    0 0 15px #ff2bd6;
+    0 0 10px #ff2bd6;
 }
 
 /* Inputs */
 input {
   width: 100%;
-  max-width: 42px;
+  max-width: 38px;
   text-align: center;
-  font-size: 16px;
+  font-size: 15px;
   border: none;
   background: transparent;
   color: #fff;
@@ -82,14 +97,15 @@ input {
   display: block;
 }
 
-/* Name inputs */
+/* Name inputs (smaller) */
 .name-input {
   border-bottom: 1px solid #39ff14;
   font-weight: bold;
-  max-width: 70px;
+  font-size: 12px;
+  max-width: 60px;
 }
 
-/* Player colors (applied when filled) */
+/* Player colors */
 .p1 { color: #00e5ff; text-shadow: 0 0 6px #00e5ff; }
 .p2 { color: #ff3b3b; text-shadow: 0 0 6px #ff3b3b; }
 .p3 { color: #ffe600; text-shadow: 0 0 6px #ffe600; }
@@ -126,8 +142,8 @@ input {
 <table id="scoreTable">
 
 <tr>
-  <th>Hole</th>
-  <th>Par</th>
+  <th class="hole-col">Hole</th>
+  <th class="par-col divider">Par</th>
   <th><input class="name-input" id="p1name" placeholder="P1"></th>
   <th><input class="name-input" id="p2name" placeholder="P2"></th>
   <th><input class="name-input" id="p3name" placeholder="P3"></th>
@@ -140,8 +156,8 @@ const pars = [3,2,4,2,2,2,2,2,3];
 for (let i = 0; i < 9; i++) {
   document.write(`
     <tr>
-      <td class="hole">${i+1}</td>
-      <td>${pars[i]}</td>
+      <td class="hole hole-col">${i+1}</td>
+      <td class="par-col divider">${pars[i]}</td>
       <td><input type="number" min="1" inputmode="numeric" pattern="[0-9]*" onchange="calcTotals()"></td>
       <td><input type="number" min="1" inputmode="numeric" pattern="[0-9]*" onchange="calcTotals()"></td>
       <td><input type="number" min="1" inputmode="numeric" pattern="[0-9]*" onchange="calcTotals()"></td>
@@ -152,7 +168,7 @@ for (let i = 0; i < 9; i++) {
 </script>
 
 <tr class="total-row">
-  <td colspan="2">Total</td>
+  <td colspan="2" class="divider">Total</td>
   <td id="t1">E</td>
   <td id="t2">E</td>
   <td id="t3">E</td>
@@ -164,7 +180,7 @@ for (let i = 0; i < 9; i++) {
 </div>
 
 <script>
-// Apply player colors when names entered
+// Name colors
 document.getElementById("p1name").oninput = function() { this.classList.add("p1"); };
 document.getElementById("p2name").oninput = function() { this.classList.add("p2"); };
 document.getElementById("p3name").oninput = function() { this.classList.add("p3"); };
