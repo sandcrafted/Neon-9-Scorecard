@@ -4,7 +4,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mini Golf Scorecard</title>
 
-<!-- 🔤 Orbitron Font -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
 
 <style>
@@ -16,19 +15,10 @@ body {
   color: #fff;
 }
 
-.header {
-  text-align: center;
-}
+.header { text-align: center; }
+.header img { display: block; margin: 4px auto; }
 
-.header img {
-  display: block;
-  margin: 4px auto;
-}
-
-.neon-logo {
-  max-width: 160px;
-}
-
+.neon-logo { max-width: 160px; }
 .fairmont-logo {
   max-width: 110px;
   filter: brightness(0) invert(1);
@@ -55,39 +45,30 @@ th, td {
   font-size: 12px;
 }
 
-/* 🔤 Headers now Orbitron */
 th {
   background: #0f2f0f;
   color: #39ff14;
-  font-weight: 600;
   font-family: 'Orbitron', sans-serif;
 }
 
-/* Hole + Par columns */
 .hole-col, .par-col {
   background: #0f2f0f;
-  color: #39ff14;
 }
 
 .hole-col { width: 32px; }
 .par-col { width: 32px; }
 
-/* Divider */
 .divider {
   border-right: 3px solid #39ff14 !important;
 }
 
-/* Hole numbers */
 .hole {
   font-size: 16px;
   font-weight: bold;
   color: #ff2bd6;
-  text-shadow:
-    0 0 5px #ff2bd6,
-    0 0 10px #ff2bd6;
+  text-shadow: 0 0 10px #ff2bd6;
 }
 
-/* Inputs */
 input {
   width: 90%;
   max-width: 36px;
@@ -96,12 +77,10 @@ input {
   border: none;
   background: transparent;
   color: #fff;
-  display: block;
   margin: 0 auto;
-  padding: 0;
+  display: block;
 }
 
-/* 👤 Name inputs (slightly larger now) */
 .name-input {
   width: 90%;
   max-width: 60px;
@@ -109,39 +88,46 @@ input {
   border-bottom: 1px solid #39ff14;
   font-weight: bold;
   text-align: center;
-  display: block;
-  margin: 0 auto;
   font-family: 'Orbitron', sans-serif;
 }
 
-/* Player colors */
 .p1 { color: #00e5ff; text-shadow: 0 0 6px #00e5ff; }
 .p2 { color: #ff3b3b; text-shadow: 0 0 6px #ff3b3b; }
 .p3 { color: #ffe600; text-shadow: 0 0 6px #ffe600; }
 .p4 { color: #b026ff; text-shadow: 0 0 6px #b026ff; }
 
-.total-row {
-  font-weight: bold;
-  background: #0a0a0a;
-}
+.total-row { background: #0a0a0a; font-weight: bold; }
 
-/* 🔤 Total label also Orbitron */
 .total-label {
   font-family: 'Orbitron', sans-serif;
 }
 
-/* Score colors */
 .under { color: #39ff14; }
 .over { color: #ff3b3b; }
 .even { color: #fff; }
 
-/* 💡 NEW: Leader glow (no fill) */
+/* Leader glow */
 .leader {
-  box-shadow:
-    0 0 8px #ff2bd6,
-    0 0 16px #ff2bd6,
-    0 0 24px #ff2bd6;
+  box-shadow: 0 0 10px #ff2bd6, 0 0 20px #ff2bd6;
   border-radius: 6px;
+}
+
+/* 🔘 Clear button */
+.clear-btn {
+  display: block;
+  margin: 14px auto;
+  padding: 10px 18px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  color: #fff;
+  background: transparent;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.clear-btn:active {
+  opacity: 0.7;
 }
 </style>
 </head>
@@ -156,7 +142,6 @@ input {
 <div class="card">
 
 <table id="scoreTable">
-
 <tr>
   <th class="hole-col">Hole</th>
   <th class="par-col divider">Par</th>
@@ -174,10 +159,10 @@ for (let i = 0; i < 9; i++) {
     <tr>
       <td class="hole hole-col">${i+1}</td>
       <td class="par-col divider">${pars[i]}</td>
-      <td><input type="number" min="1" inputmode="numeric" pattern="[0-9]*" onchange="calcTotals()"></td>
-      <td><input type="number" min="1" inputmode="numeric" pattern="[0-9]*" onchange="calcTotals()"></td>
-      <td><input type="number" min="1" inputmode="numeric" pattern="[0-9]*" onchange="calcTotals()"></td>
-      <td><input type="number" min="1" inputmode="numeric" pattern="[0-9]*" onchange="calcTotals()"></td>
+      <td><input type="number" min="1" inputmode="numeric" onchange="calcTotals()"></td>
+      <td><input type="number" min="1" inputmode="numeric" onchange="calcTotals()"></td>
+      <td><input type="number" min="1" inputmode="numeric" onchange="calcTotals()"></td>
+      <td><input type="number" min="1" inputmode="numeric" onchange="calcTotals()"></td>
     </tr>
   `);
 }
@@ -195,56 +180,87 @@ for (let i = 0; i < 9; i++) {
 
 </div>
 
+<!-- 🔘 Clear Button -->
+<button class="clear-btn" onclick="clearScores()">Clear Scores</button>
+
 <script>
 // Name colors
-document.getElementById("p1name").oninput = function() { this.classList.add("p1"); };
-document.getElementById("p2name").oninput = function() { this.classList.add("p2"); };
-document.getElementById("p3name").oninput = function() { this.classList.add("p3"); };
-document.getElementById("p4name").oninput = function() { this.classList.add("p4"); };
+["p1name","p2name","p3name","p4name"].forEach((id,i)=>{
+  document.getElementById(id).oninput=function(){
+    this.classList.add("p"+(i+1));
+    saveData();
+  };
+});
 
+// Save + Load
+function saveData() {
+  let data = [];
+  document.querySelectorAll("input").forEach(i => data.push(i.value));
+  localStorage.setItem("golfData", JSON.stringify(data));
+}
+
+function loadData() {
+  let data = JSON.parse(localStorage.getItem("golfData") || "[]");
+  document.querySelectorAll("input").forEach((input,i)=>{
+    if (data[i]) input.value = data[i];
+  });
+  calcTotals();
+}
+
+// Clear
+function clearScores() {
+  if (!confirm("Are you sure you want to clear all scores?")) return;
+
+  document.querySelectorAll("input").forEach(i => i.value = "");
+  localStorage.removeItem("golfData");
+  calcTotals();
+}
+
+// Totals
 function calcTotals() {
   let rows = document.querySelectorAll("#scoreTable tr");
   let totals = [0,0,0,0];
 
   for (let i = 1; i <= 4; i++) {
-    document.getElementById("t" + i).classList.remove("leader");
+    document.getElementById("t"+i).classList.remove("leader");
   }
 
-  rows.forEach((row, rIndex) => {
-    if (rIndex > 0 && rIndex <= 9) {
+  rows.forEach((row, rIndex)=>{
+    if (rIndex>0 && rIndex<=9){
       let inputs = row.querySelectorAll("input[type='number']");
-      inputs.forEach((input, i) => {
+      inputs.forEach((input,i)=>{
         let val = Number(input.value);
-        let par = pars[rIndex - 1];
-
-        if (!isNaN(val) && val > 0) {
-          totals[i] += (val - par);
+        if (!isNaN(val) && val>0){
+          totals[i]+=val - pars[rIndex-1];
         }
       });
     }
   });
 
-  for (let i = 0; i < 4; i++) {
-    let el = document.getElementById("t" + (i+1));
-    let score = totals[i];
+  for (let i=0;i<4;i++){
+    let el=document.getElementById("t"+(i+1));
+    let score=totals[i];
 
-    el.innerText = score === 0 ? "E" : (score > 0 ? "+" + score : score);
+    el.innerText = score===0 ? "E" : (score>0 ? "+"+score : score);
 
     el.classList.remove("under","over","even");
-
-    if (score < 0) el.classList.add("under");
-    else if (score > 0) el.classList.add("over");
+    if (score<0) el.classList.add("under");
+    else if (score>0) el.classList.add("over");
     else el.classList.add("even");
   }
 
   let minScore = Math.min(...totals);
-
-  totals.forEach((score, i) => {
-    if (score === minScore) {
-      document.getElementById("t" + (i+1)).classList.add("leader");
+  totals.forEach((s,i)=>{
+    if (s===minScore){
+      document.getElementById("t"+(i+1)).classList.add("leader");
     }
   });
+
+  saveData();
 }
+
+// Load on open
+window.onload = loadData;
 </script>
 
 </body>
