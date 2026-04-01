@@ -41,16 +41,29 @@ table {
 th, td {
   border: 1px solid #39ff14;
   padding: 5px 2px;
-  text-align: center;
   font-size: 12px;
 }
 
+/* 🔥 CENTER EVERYTHING PROPERLY */
+td, th {
+  text-align: center;
+  vertical-align: middle;
+}
+
+td {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Headers */
 th {
   background: #0f2f0f;
   color: #39ff14;
   font-family: 'Orbitron', sans-serif;
 }
 
+/* Left columns */
 .hole-col, .par-col {
   background: #0f2f0f;
 }
@@ -62,6 +75,7 @@ th {
   border-right: 3px solid #39ff14 !important;
 }
 
+/* Hole numbers */
 .hole {
   font-size: 16px;
   font-weight: bold;
@@ -69,21 +83,21 @@ th {
   text-shadow: 0 0 10px #ff2bd6;
 }
 
+/* Inputs */
 input {
-  width: 90%;
-  max-width: 36px;
+  width: 100%;
+  max-width: 40px;
   text-align: center;
   font-size: 15px;
   border: none;
   background: transparent;
   color: #fff;
-  margin: 0 auto;
-  display: block;
+  padding: 0;
 }
 
+/* Name inputs (FIXED) */
 .name-input {
-  width: 90%;
-  max-width: 60px;
+  max-width: 65px;
   font-size: 13px;
   border-bottom: 1px solid #39ff14;
   font-weight: bold;
@@ -91,12 +105,16 @@ input {
   font-family: 'Orbitron', sans-serif;
 }
 
+/* Player colors */
 .p1 { color: #00e5ff; text-shadow: 0 0 6px #00e5ff; }
 .p2 { color: #ff3b3b; text-shadow: 0 0 6px #ff3b3b; }
 .p3 { color: #ffe600; text-shadow: 0 0 6px #ffe600; }
 .p4 { color: #b026ff; text-shadow: 0 0 6px #b026ff; }
 
-.total-row { background: #0a0a0a; font-weight: bold; }
+.total-row {
+  background: #0a0a0a;
+  font-weight: bold;
+}
 
 .total-label {
   font-family: 'Orbitron', sans-serif;
@@ -112,7 +130,7 @@ input {
   border-radius: 6px;
 }
 
-/* 🔘 Clear button */
+/* Button */
 .clear-btn {
   display: block;
   margin: 14px auto;
@@ -123,11 +141,6 @@ input {
   background: transparent;
   border: 2px solid #fff;
   border-radius: 8px;
-  text-align: center;
-}
-
-.clear-btn:active {
-  opacity: 0.7;
 }
 </style>
 </head>
@@ -180,11 +193,9 @@ for (let i = 0; i < 9; i++) {
 
 </div>
 
-<!-- 🔘 Clear Button -->
 <button class="clear-btn" onclick="clearScores()">Clear Scores</button>
 
 <script>
-// Name colors
 ["p1name","p2name","p3name","p4name"].forEach((id,i)=>{
   document.getElementById(id).oninput=function(){
     this.classList.add("p"+(i+1));
@@ -192,7 +203,6 @@ for (let i = 0; i < 9; i++) {
   };
 });
 
-// Save + Load
 function saveData() {
   let data = [];
   document.querySelectorAll("input").forEach(i => data.push(i.value));
@@ -207,16 +217,13 @@ function loadData() {
   calcTotals();
 }
 
-// Clear
 function clearScores() {
   if (!confirm("Are you sure you want to clear all scores?")) return;
-
   document.querySelectorAll("input").forEach(i => i.value = "");
   localStorage.removeItem("golfData");
   calcTotals();
 }
 
-// Totals
 function calcTotals() {
   let rows = document.querySelectorAll("#scoreTable tr");
   let totals = [0,0,0,0];
@@ -259,7 +266,6 @@ function calcTotals() {
   saveData();
 }
 
-// Load on open
 window.onload = loadData;
 </script>
 
