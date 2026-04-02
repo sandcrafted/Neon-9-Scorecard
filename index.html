@@ -92,17 +92,15 @@ input {
 /* ✅ FIXED NAME ALIGNMENT */
 .name-input {
   width: 100%;
-  max-width: 50px;
-  min-width: 0px;
-  flex: 1;
-  font-size: 13px;
+  max-width: 100%;
+  font-size: 14px;
   border-bottom: 1px solid #39ff14;
   font-weight: bold;
   text-align: center;
   font-family: 'Orbitron', sans-serif;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0;
+  padding: 0;
 }
 
 /* Player colors */
@@ -163,6 +161,19 @@ input {
 </tr>
 
 <script>
+
+function autoResizeName(input) {
+  let maxSize = 14;
+  let minSize = 8;
+
+  input.style.fontSize = maxSize + "px";
+
+  while (input.scrollWidth > input.clientWidth && maxSize > minSize) {
+    maxSize -= 0.5;
+    input.style.fontSize = maxSize + "px";
+  }
+}
+  
 const pars = [3,2,4,2,2,2,2,2,3];
 
 for (let i = 0; i < 9; i++) {
@@ -200,6 +211,7 @@ for (let i = 0; i < 9; i++) {
 ["p1name","p2name","p3name","p4name"].forEach((id,i)=>{
   document.getElementById(id).oninput=function(){
     this.classList.add("p"+(i+1));
+    autoResizeName(this);
     saveData();
   };
 });
@@ -213,7 +225,10 @@ function saveData() {
 function loadData() {
   let data = JSON.parse(localStorage.getItem("golfData") || "[]");
   document.querySelectorAll("input").forEach((input,i)=>{
-    if (data[i]) input.value = data[i];
+  if (data[i]) {
+  input.value = data[i];
+  if (input.classList.contains("name-input")) autoResizeName(input);
+}
   });
   calcTotals();
 }
