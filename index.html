@@ -239,9 +239,15 @@ function loadData() {
 
 function clearScores() {
   if (!confirm("Are you sure you want to clear all scores?")) return;
-  document.querySelectorAll("input").forEach(i => i.value = "");
-  localStorage.removeItem("golfData");
+
+  // ONLY clear score inputs (number fields)
+  document.querySelectorAll("input[type='number']").forEach(i => i.value = "");
+
+  // Keep names, but reset totals
   calcTotals();
+
+  // Save updated (cleared scores, preserved names)
+  saveData();
 }
 
 function calcTotals() {
