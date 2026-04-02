@@ -233,24 +233,13 @@ function loadData() {
     if (data[i]) {
       input.value = data[i];
 
-      // ✅ Reapply name styling + resize if it's a name field
+      // ✅ If it's a name field, trigger its normal behavior
       if (input.classList.contains("name-input")) {
-        let index = ["p1name","p2name","p3name","p4name"].indexOf(input.id);
-        if (index !== -1) {
-          input.classList.add("p" + (index + 1));
-        }
-
-        // keep your auto-resize working on reload
-        if (typeof autoResizeName === "function") {
-          autoResizeName(input);
-        }
+        input.dispatchEvent(new Event('input'));
       }
     }
   });
 
-  calcTotals();
-}
-  });
   calcTotals();
 }
 
