@@ -228,10 +228,27 @@ function saveData() {
 
 function loadData() {
   let data = JSON.parse(localStorage.getItem("golfData") || "[]");
-  document.querySelectorAll("input").forEach((input,i)=>{
-  if (data[i]) {
-  input.value = data[i];
-  if (input.classList.contains("name-input")) autoResizeName(input);
+
+  document.querySelectorAll("input").forEach((input, i) => {
+    if (data[i]) {
+      input.value = data[i];
+
+      // ✅ Reapply name styling + resize if it's a name field
+      if (input.classList.contains("name-input")) {
+        let index = ["p1name","p2name","p3name","p4name"].indexOf(input.id);
+        if (index !== -1) {
+          input.classList.add("p" + (index + 1));
+        }
+
+        // keep your auto-resize working on reload
+        if (typeof autoResizeName === "function") {
+          autoResizeName(input);
+        }
+      }
+    }
+  });
+
+  calcTotals();
 }
   });
   calcTotals();
