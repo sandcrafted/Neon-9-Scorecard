@@ -222,6 +222,41 @@ for (let i = 0; i < 9; i++) {
     </tr>
   `);
 }
+
+function setupAutoAdvance() {
+  const rows = document.querySelectorAll("#scoreTable tr");
+
+  rows.forEach((row, rIndex) => {
+    // Only score rows (skip header + total row)
+    if (rIndex > 0 && rIndex <= 9) {
+      const inputs = row.querySelectorAll("input[type='number']");
+
+      inputs.forEach((input, i) => {
+        input.addEventListener("input", () => {
+          if (input.value.length === 0) return;
+
+          // Get active players (names filled)
+          const activePlayers = ["p1name","p2name","p3name","p4name"]
+            .map(id => document.getElementById(id))
+            .map((el, idx) => el.value.trim() !== "" ? idx : null)
+            .filter(idx => idx !== null);
+
+          // If current column isn't active, do nothing
+          if (!activePlayers.includes(i)) return;
+
+          // Find next active player index
+          const currentIndex = activePlayers.indexOf(i);
+          const nextIndex = activePlayers[currentIndex + 1];
+
+          if (nextIndex !== undefined && inputs[nextIndex]) {
+            inputs[nextIndex].focus();
+          }
+        });
+      });
+    }
+  });
+}
+  
 </script>
 
 <tr class="total-row">
@@ -328,7 +363,10 @@ function calcTotals() {
   saveData();
 }
 
-window.onload = loadData;
+window.onload = function() {
+  loadData();
+  setupAutoAdvance();
+};
 </script>
 
 </body>
